@@ -35,6 +35,18 @@ available:
 gemini skills link ./alfazen-versioning --scope user
 ```
 
+Alternatively, install it globally for all three runtimes with `npx`:
+
+```sh
+npx skills add https://github.com/marcuz-apl/alfazen-skills/tree/master/alfazen-versioning -g -a claude-code -a codex -a gemini-cli --copy -y
+```
+
+Verify the installation with:
+
+```sh
+npx skills list
+```
+
 After installation, invoke it by its name or ask the agent to configure or
 audit Alfazen Versioning in a Git repository.
 
