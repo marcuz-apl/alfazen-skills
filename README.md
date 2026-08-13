@@ -52,5 +52,6 @@ audit Alfazen Versioning in a Git repository.
 
 ## License
 
-Add the license you want this skill collection to use before publishing it as
-a broader community package.
+This skill collection is released under the [MIT License](LICENSE). It is free
+to use, copy, modify, redistribute, and include in commercial projects, subject
+to the copyright and license notice.
