@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+set -eu
+
+message_file=$1
+root=$(git rev-parse --show-toplevel)
+. "$root/.githooks/versioning.sh"
+current=$(versioning_current)
+versioning_validate "$current"
+versioning_stamp_message "$message_file" "$current"
