@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alfazen Versioning"
+  short_description: "Configure bounded Git versioning with automatic patch bumps"
+  default_prompt: "Use $alfazen-versioning to configure or audit a repository VERSION file and Git hooks."

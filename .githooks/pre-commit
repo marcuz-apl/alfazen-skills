@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+set -eu
+
+root=$(git rev-parse --show-toplevel)
+. "$root/.githooks/versioning.sh"
+versioning_advance_file
