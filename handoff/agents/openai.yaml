@@ -1,0 +1,4 @@
+interface:
+  display_name: "Handoff"
+  short_description: "Capture concise project state for safe resumption"
+  default_prompt: "Use $handoff to create or update a concise HANDOFF.md for resuming this project."

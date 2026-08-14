@@ -2,7 +2,7 @@
 
 Reusable Agent Skills for Git and development workflows.
 
-## Included skill
+## Included skills
 
 ### `alfazen-versioning`
 
@@ -15,6 +15,12 @@ Configures or audits bounded `m.n.p` Git versioning with:
 - rollover, amend, repeated-hook, malformed-version, and staged-file checks.
 
 The skill never adds source-writing APIs or unrelated release automation.
+
+### `handoff`
+
+Creates or updates a concise root `HANDOFF.md` for explicit checkpoints,
+milestones, pauses, blockers, and safe project resumption. It does not depend on
+logout detection and does not commit or push automatically.
 
 ## Install
 
@@ -39,6 +45,12 @@ Alternatively, install it globally for all three runtimes with `npx`:
 
 ```sh
 npx skills add https://github.com/marcuz-apl/alfazen-skills/tree/master/alfazen-versioning -g -a claude-code -a codex -a gemini-cli --copy -y
+```
+
+Install only the handoff skill with:
+
+```sh
+npx skills add https://github.com/marcuz-apl/alfazen-skills/tree/master/handoff -g -a claude-code -a codex -a gemini-cli --copy -y
 ```
 
 Verify the installation with:
