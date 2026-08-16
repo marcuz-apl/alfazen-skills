@@ -10,9 +10,12 @@ Configures or audits bounded `m.n.p` Git versioning with:
 
 - a tracked root `VERSION` file;
 - automatic per-commit patch bumps;
-- UTC build timestamps in commit subjects;
+- UTC `yymmddc` build identifiers in commit subjects (`1`–`9`, then `a`–`z`,
+  for 35 builds per day);
+- connected identifiers in the form `m.n.p-yymmddc`;
 - versioned `pre-commit` and `prepare-commit-msg` hooks;
-- rollover, amend, repeated-hook, malformed-version, and staged-file checks.
+- version rollover, daily-counter rollover, amend, repeated-hook,
+  malformed-identifier, and staged-file checks.
 
 The skill never adds source-writing APIs or unrelated release automation.
 
