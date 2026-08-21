@@ -132,6 +132,8 @@ This repository curates and packages agent skills from the open-source community
   - `ui-ux-pro-max` — searchable UI/UX design intelligence database and stack implementation rules
 - **Anthropic Skill Packages**:
   - `playwright` (Web Application Testing) — licensed under Apache 2.0 (Copyright Anthropic, PBC)
+- **[Microsoft Playwright CLI](https://github.com/microsoft/playwright-cli)**:
+  - `playwright-cli` — Codex-adapted browser automation skill derived from Microsoft's repository; Copyright Microsoft Corporation, licensed under Apache 2.0
 - **Developer Workflows & Tooling**:
   - `github` — GitHub CLI workflows, PR management, and GitHub Actions CI/CD debugging
   - `figma` — Figma REST API integration, design token extraction, and SVG synchronization
