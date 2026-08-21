@@ -80,7 +80,17 @@ npx skills add https://github.com/marcuz-apl/alfazen-skills/tree/master/alfazen-
 npx skills add https://github.com/marcuz-apl/alfazen-skills/tree/master/alfazen-media -g -a claude-code -a codex -a gemini-cli --copy -y
 ```
 
-### Option C: Install a Specific Skill via `npx`
+### Option C: Install Anthropic-Selected Skills into Claude Code Only
+
+The `anthropic-selected` folder contains `claude-api`, `academy-guide`, and
+`brand-guidelines`. These are intentionally excluded from the general coding
+and media bundle commands above.
+
+```sh
+npx skills add https://github.com/marcuz-apl/alfazen-skills/tree/master/anthropic-selected -g -a claude-code --copy -y
+```
+
+### Option D: Install a Specific Skill via `npx`
 
 ```sh
 # Install only test-driven-development
@@ -90,7 +100,7 @@ npx skills add https://github.com/marcuz-apl/alfazen-skills/tree/master/alfazen-
 npx skills add https://github.com/marcuz-apl/alfazen-skills/tree/master/alfazen-media/remotion -g -a claude-code -a codex -a gemini-cli --copy -y
 ```
 
-### Option D: Manual or Local Link Installation
+### Option E: Manual or Local Link Installation
 
 Copy or symlink any skill directory into your personal agent skill directory:
 
@@ -130,6 +140,8 @@ This repository curates and packages agent skills from the open-source community
   - `impeccable` — frontend craft, design systems, visual polish, and UX guidance
 - **[UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**:
   - `ui-ux-pro-max` — searchable UI/UX design intelligence database and stack implementation rules
+- **[Anthropic Selected Skills](https://github.com/anthropics/skills)**:
+  - `claude-api`, `academy-guide`, and `brand-guidelines` — retained under their Apache 2.0 licenses and intended for Claude Code only
 - **Anthropic Skill Packages**:
   - `playwright` (Web Application Testing) — licensed under Apache 2.0 (Copyright Anthropic, PBC)
 - **[Microsoft Playwright CLI](https://github.com/microsoft/playwright-cli)**:
