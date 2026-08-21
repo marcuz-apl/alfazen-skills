@@ -6,17 +6,27 @@ description: Use when an AI coding assistant needs to establish or audit bounded
 # Alfazen Versioning
 
 Apply one language-independent versioning contract to a Git project. Keep the
-current full identifier in a tracked root `VERSION` file and use versioned Git
-hooks to bump it before each created commit and stamp the commit subject.
+VERSION number and BUILD number distinct, connect them as `VERSION-BUILD`, and
+store that full identifier in a tracked root `VERSION` file.
+
+## Identifier components
+
+- The VERSION number is `m.n.p`. It is the project release/version component.
+- The BUILD number is `yymmddc`, such as `260821a`. It is the seven-character
+  UTC date-and-daily-counter component.
+- The connected identifier is `m.n.p-yymmddc`, such as
+  `1.0.9-260821a`. The dash is the only separator between VERSION and BUILD.
+- The root `VERSION` file stores the connected identifier, not either component
+  by itself. Hooks must parse and update the two components separately.
 
 ## Version contract
 
 - Initialize `VERSION` with `1.0.0-<current UTC yymmdd>1` when it does not
   exist. Treat that value as the baseline; the first hook-run commit advances
   both the version and the daily counter.
-- Store the connected identifier as `m.n.p-yymmddc`. The `yymmddc` build
-  identifier is exactly seven characters: six UTC date digits followed by one
-  lowercase counter character.
+- Store the connected identifier as `m.n.p-yymmddc`. The `yymmddc` BUILD number
+  is exactly seven characters: six UTC date digits followed by one lowercase
+  counter character.
 - Accept only `m.n.p-yymmddc`, where `m` is a non-negative decimal integer,
   `n` and `p` are single digits `0`–`9`, and `yymmddc` follows the build rules
   below.
@@ -24,16 +34,17 @@ hooks to bump it before each created commit and stamp the commit subject.
 - When `p` is `9`, reset it to `0` and increment `n`.
 - When `n` is `9`, reset it to `0` and increment `m`.
 - Therefore `1.0.8 → 1.0.9 → 1.1.0` and `1.9.9 → 2.0.0`.
-- Format the build suffix as `yymmddc` using the current UTC date. For each UTC
+- Format the BUILD number as `yymmddc` using the current UTC date. For each UTC
   day, use the counter sequence `1` through `9`, then `a` through `z`.
-- Reset the counter to `1` when the UTC date changes. If `z` has already been
-  used on the current UTC date, reject the next commit rather than reusing,
+- Reset the BUILD counter to `1` when the UTC date changes. If `z` has already
+  been used on the current UTC date, reject the next commit rather than reusing,
   skipping, or silently changing a counter.
 - Reject malformed versions, invalid calendar dates, future-dated identifiers,
   and exhausted daily counters; never silently clamp, skip, or repair a value.
-- Treat `VERSION` as the single source of truth for both components. Do not
-  derive `m.n.p` from tags, commit count, or commit messages; derive only the
-  `yymmddc` suffix from the current UTC date and the prior `VERSION` value.
+- Treat the root `VERSION` file as the single source of truth for both
+  components. Do not derive `m.n.p` from tags, commit count, or commit
+  messages; derive only the BUILD number from the current UTC date and the
+  prior `VERSION` value.
 
 ## Configure a repository
 
@@ -56,11 +67,11 @@ hooks to bump it before each created commit and stamp the commit subject.
 
 ### `.githooks/pre-commit`
 
-Read `VERSION`, validate the full `m.n.p-yymmddc` identifier, compute exactly
-one next identifier, write only `VERSION`, and stage only `VERSION`. Preserve
-every other staged file and its staged contents. Increment `p` with the normal
-carry rules, then advance the daily counter or reset it to `1` for a new UTC
-date.
+Read the root `VERSION` file, validate the connected `VERSION-BUILD` identifier,
+compute exactly one next identifier, write only `VERSION`, and stage only
+`VERSION`. Preserve every other staged file and its staged contents. Increment
+`p` with the normal carry rules, then advance the daily counter or reset it to
+`1` for a new UTC date.
 
 If the commit is rejected or aborted after the bump, explain that the working
 tree may contain the incremented version. Offer this safe rollback path when a
@@ -76,8 +87,8 @@ Do not create an automatic follow-up commit.
 ### `.githooks/prepare-commit-msg`
 
 Git invokes this hook after `pre-commit` in the normal commit flow. Read the
-already-bumped `VERSION` and rewrite only the first non-comment subject line.
-Use the full identifier and this exact prefix format:
+already-bumped connected identifier from `VERSION` and rewrite only the first
+non-comment subject line. Use this exact prefix format:
 
 ```text
 m.n.p-yymmddc feat: original message
