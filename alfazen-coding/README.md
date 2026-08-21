@@ -14,7 +14,7 @@ Reusable Agent Skills for software development, testing, git versioning, code re
 
 ## All Included Skills (17)
 
-- **[`alfazen-versioning`](alfazen-versioning/SKILL.md)**: Bounded `m.n.p` versioning with per-commit patch bumps and UTC build IDs.
+- **[`alfazen-versioning`](alfazen-versioning/SKILL.md)**: Bounded `m.n.p` versioning with per-commit patch bumps and `v{VERSION}-{BUILD}` UTC build IDs.
 - **[`brainstorming`](brainstorming/SKILL.md)**: Explore user intent, requirements, and design before implementation.
 - **[`executing-plans`](executing-plans/SKILL.md)**: Execute written implementation plans with review checkpoints.
 - **[`figma`](figma/SKILL.md)**: Figma REST API integration, design tokens, and SVG asset sync.

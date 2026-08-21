@@ -1,35 +1,39 @@
 ---
 name: alfazen-versioning
-description: Use when an AI coding assistant needs to establish or audit bounded m.n.p Git versioning, per-commit patch bumps, UTC yymmddc build identifiers, or versioned commit-message hooks.
+description: Use when an AI coding assistant needs to establish or audit bounded m.n.p Git versioning, per-commit patch bumps, UTC yymmddc build identifiers, or v{VERSION}-{BUILD} commit-message hooks.
 ---
 
 # Alfazen Versioning
 
 Apply one language-independent versioning contract to a Git project. Keep the
-VERSION number and BUILD number distinct, connect them as `VERSION-BUILD`, and
-store that full identifier in a tracked root `VERSION` file.
+VERSION number and BUILD number distinct, connect them as `v{VERSION}-{BUILD}`,
+and store that full identifier in a tracked root `VERSION` file.
 
 ## Identifier components
 
 - The VERSION number is `m.n.p`. It is the project release/version component.
 - The BUILD number is `yymmddc`, such as `260821a`. It is the seven-character
   UTC date-and-daily-counter component.
-- The connected identifier is `m.n.p-yymmddc`, such as
-  `1.0.9-260821a`. The dash is the only separator between VERSION and BUILD.
+- The connected identifier is `v{VERSION}-{BUILD}`, such as
+  `v1.0.9-260821a`. The lowercase `v` marks the VERSION number, and the dash
+  is the only separator between VERSION and BUILD.
 - The root `VERSION` file stores the connected identifier, not either component
   by itself. Hooks must parse and update the two components separately.
 
 ## Version contract
 
-- Initialize `VERSION` with `1.0.0-<current UTC yymmdd>1` when it does not
+- Initialize `VERSION` with `v1.0.0-<current UTC yymmdd>1` when it does not
   exist. Treat that value as the baseline; the first hook-run commit advances
   both the version and the daily counter.
-- Store the connected identifier as `m.n.p-yymmddc`. The `yymmddc` BUILD number
+- Store the connected identifier as `v{VERSION}-{BUILD}`. The `yymmddc` BUILD number
   is exactly seven characters: six UTC date digits followed by one lowercase
   counter character.
-- Accept only `m.n.p-yymmddc`, where `m` is a non-negative decimal integer,
+- Accept only `v{VERSION}-{BUILD}`, where VERSION is `m.n.p` and `m` is a non-negative decimal integer,
   `n` and `p` are single digits `0`–`9`, and `yymmddc` follows the build rules
-  below.
+  below. The concrete shape is `^v[0-9]+\.[0-9]\.[0-9]-[0-9]{6}[0-9a-z]$`.
+- When upgrading a legacy root `VERSION` containing `m.n.p-yymmddc`, prepend
+  exactly one lowercase `v` after validating the legacy components; do not
+  change either component during this migration.
 - Bump `p` for every commit that runs the hooks.
 - When `p` is `9`, reset it to `0` and increment `n`.
 - When `n` is `9`, reset it to `0` and increment `m`.
@@ -67,7 +71,7 @@ store that full identifier in a tracked root `VERSION` file.
 
 ### `.githooks/pre-commit`
 
-Read the root `VERSION` file, validate the connected `VERSION-BUILD` identifier,
+Read the root `VERSION` file, validate the connected `v{VERSION}-{BUILD}` identifier,
 compute exactly one next identifier, write only `VERSION`, and stage only
 `VERSION`. Preserve every other staged file and its staged contents. Increment
 `p` with the normal carry rules, then advance the daily counter or reset it to
@@ -91,19 +95,20 @@ already-bumped connected identifier from `VERSION` and rewrite only the first
 non-comment subject line. Use this exact prefix format:
 
 ```text
-m.n.p-yymmddc feat: original message
+v{VERSION}-{BUILD} feat: original message
 ```
 
 Example:
 
 ```text
-1.1.0-260816a feat: add parser
+v1.1.0-260816a feat: add parser
 ```
 
-Strip one existing matching `m.n.p-yymmddc` prefix before adding the current
-prefix. This must be idempotent for repeated execution, amend, rebase, and
-cherry-pick. Preserve the message body, blank lines, and trailers. Preserve the
-original Conventional Commit type; never turn `fix:` into `feat:`.
+Strip one existing matching `v{VERSION}-{BUILD}` prefix before adding the
+current prefix. This must be idempotent for repeated execution, amend, rebase,
+and cherry-pick. Preserve the message body, blank lines, and trailers. Preserve
+the original Conventional Commit type; `feat:` is used for feature commits, but
+never turn `fix:` or another type into `feat:`.
 
 Use a locale-independent UTC formatter. On Windows, remember that Git executes
 POSIX shell hooks through its bundled shell; do not assume the current working
@@ -129,11 +134,11 @@ Use a disposable test repository or temporary clone. Verify:
 - `1.0.9` becomes `1.1.0`.
 - `1.9.9` becomes `2.0.0`.
 - A normal commit contains the bumped `VERSION` and one subject stamped as
-  `m.n.p-yymmddc <original type>: <original subject>`.
+  `v{VERSION}-{BUILD} <original type>: <original subject>`.
 - The daily counter advances `9 → a`, and `z` is rejected when no new UTC day
   has started; a new UTC day resets the counter to `1`.
 - The connected value remains intact across version carries, for example
-  `1.0.9-260815z → 1.1.0-2608161` when the date changes.
+  `v1.0.9-260815z → v1.1.0-2608161` when the date changes.
 - A commit with staged files besides `VERSION` preserves those files.
 - Amend does not duplicate the prefix and bumps once.
 - Repeated `prepare-commit-msg` execution does not duplicate the prefix.
