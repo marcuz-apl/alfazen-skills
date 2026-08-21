@@ -112,7 +112,7 @@ gemini skills link ./alfazen-coding/alfazen-versioning --scope user
 
 This repository curates and packages agent skills from the open-source community and original internal creations:
 
-- **Alfazen Inc.**:
+- **[Alfazen Inc.](https://alfazen.org)**:
   - `alfazen-versioning` — Bounded `m.n.p` VERSION numbers connected to UTC `yymmddc` BUILD numbers.
   - `handoff` — Checkpoint and safe project resumption skill (product of Alfazen Inc.).
 - **[Remotion Skills](https://github.com/remotion-dev/skills)** by Remotion Team:
@@ -128,7 +128,7 @@ This repository curates and packages agent skills from the open-source community
   - `ponytail` — minimal, bloat-free coding via the Decision Ladder (YAGNI, stdlib first, anti-bloat)
 - **[Impeccable](https://github.com/pbakaus/impeccable)** by Paul Bakaus:
   - `impeccable` — frontend craft, design systems, visual polish, and UX guidance
-- **UI/UX Pro Max**:
+- **[UI/UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill)**:
   - `ui-ux-pro-max` — searchable UI/UX design intelligence database and stack implementation rules
 - **Anthropic Skill Packages**:
   - `playwright` (Web Application Testing) — licensed under Apache 2.0 (Copyright Anthropic, PBC)
@@ -138,7 +138,4 @@ This repository curates and packages agent skills from the open-source community
 
 ## License
 
-This skill collection is released under the [MIT License](LICENSE). It is free
-to use, copy, modify, redistribute, and include in commercial projects, subject
-to the copyright and license notice. Included third-party skills retain their
-respective original licenses and copyright notices (e.g., Apache 2.0 for `playwright`).
+This skill collection is released under the [MIT License](LICENSE). It is free to use, copy, modify, redistribute, and include in commercial projects, subject to the copyright and license notice. Included third-party skills retain their respective original licenses and copyright notices (e.g., Apache 2.0 for `playwright`).
