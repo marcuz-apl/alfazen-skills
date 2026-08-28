@@ -9,7 +9,7 @@ Reusable Agent Skills collection organized into specialized domain bundles for A
 | **Code Efficiency & Architecture** | [`ponytail`](./alfazen-coding/ponytail), [`alfazen-versioning`](./alfazen-coding/alfazen-versioning), [`handoff`](./alfazen-coding/handoff) | Anti-bloat Decision Ladder, connected v{VERSION}-{BUILD} identifiers, and project checkpoints |
 | **Engineering Methodology** | [`test-driven-development`](./alfazen-coding/test-driven-development), [`systematic-debugging`](./alfazen-coding/systematic-debugging), [`writing-plans`](./alfazen-coding/writing-plans), [`executing-plans`](./alfazen-coding/executing-plans), [`subagent-driven-development`](./alfazen-coding/subagent-driven-development), [`brainstorming`](./alfazen-coding/brainstorming) | Red-Green-Refactor TDD, root-cause isolation, plan execution, and subagent orchestration |
 | **Quality & Review** | [`requesting-code-review`](./alfazen-coding/requesting-code-review), [`receiving-code-review`](./alfazen-coding/receiving-code-review), [`verification-before-completion`](./alfazen-coding/verification-before-completion) | Subagent review dispatch, technical feedback verification, and evidence checks |
-| **Frontend, UX & Design** | [`ui-ux-pro-max`](./alfazen-coding/ui-ux-pro-max), [`impeccable`](./alfazen-coding/impeccable), [`figma`](./alfazen-coding/figma) | UI/UX intelligence database, design critique, visual polish, and Figma token extraction |
+| **Frontend, UX & Design** | [`ui-ux-pro-max`](./alfazen-coding/ui-ux-pro-max), [`impeccable`](./alfazen-coding/impeccable), [`apple-design`](./alfazen-coding/apple-design), [`figma`](./alfazen-coding/figma) | UI/UX intelligence database, design critique, Apple HIG review, and Figma token extraction |
 | **Testing & Tooling** | [`playwright`](./alfazen-coding/playwright), [`github`](./alfazen-coding/github) | Headless browser testing, GitHub CLI automation, and CI/CD Actions debugging |
 | **Generative Media** | [`character`](./alfazen-media/character), [`hyperframes`](./alfazen-media/hyperframes), [`remotion`](./alfazen-media/remotion), [`sequence`](./alfazen-media/sequence) | Programmatic React video, motion shaders, character design, and scene sequencing |
 
@@ -17,13 +17,14 @@ Reusable Agent Skills collection organized into specialized domain bundles for A
 
 ## Skill Bundles
 
-### 1. [`alfazen-coding`](./alfazen-coding) (17 Skills)
+### 1. [`alfazen-coding`](./alfazen-coding) (18 Skills)
 
 Workflows for software engineering, testing, git versioning, code reviews, and UI/UX design:
 
 | Skill | Description |
 |---|---|
 | [`alfazen-versioning`](./alfazen-coding/alfazen-versioning) | Bounded `m.n.p` VERSION numbers connected as `v{VERSION}-{BUILD}` to UTC `yymmddc` BUILD numbers |
+| [`apple-design`](./alfazen-coding/apple-design) | Cross-platform UI/UX design review and audit grounded in Apple Human Interface Guidelines |
 | [`brainstorming`](./alfazen-coding/brainstorming) | Explores intent, requirements, and design before creative or implementation work |
 | [`executing-plans`](./alfazen-coding/executing-plans) | Executes implementation plans in separate sessions with review checkpoints |
 | [`figma`](./alfazen-coding/figma) | Figma REST API integration, design tokens, and SVG asset synchronization |
@@ -125,6 +126,8 @@ This repository curates and packages agent skills from the open-source community
 - **[Alfazen Inc.](https://alfazen.org)**:
   - `alfazen-versioning` — Bounded `m.n.p` VERSION numbers connected as `v{VERSION}-{BUILD}` to UTC `yymmddc` BUILD numbers.
   - `handoff` — Checkpoint and safe project resumption skill (product of Alfazen Inc.).
+- **[Apple Design Skill](https://github.com/dickwu/apple-design-skill)** by Dick Wu:
+  - `apple-design` — Cross-platform UI/UX design review and audit system grounded in Apple Human Interface Guidelines (HIG).
 - **[Remotion Skills](https://github.com/remotion-dev/skills)** by Remotion Team:
   - `remotion` — Programmatic React video creation, composition, and rendering pipelines.
 - **[HyperFrames](https://github.com/heygen-com/hyperframes)** by HeyGen / HyperFrames Team:
@@ -147,8 +150,8 @@ This repository curates and packages agent skills from the open-source community
 - **[Microsoft Playwright CLI](https://github.com/microsoft/playwright-cli)**:
   - `playwright-cli` — Codex-adapted browser automation skill derived from Microsoft's repository; Copyright Microsoft Corporation, licensed under Apache 2.0
 - **Developer Workflows & Tooling**:
-  - `github` — GitHub CLI workflows, PR management, and GitHub Actions CI/CD debugging
-  - `figma` — Figma REST API integration, design token extraction, and SVG synchronization
+  - `github` — GitHub CLI workflows, PR management, and GitHub Actions CI/CD debugging (derived from [GitHub CLI](https://cli.github.com))
+  - `figma` — Design-to-code workflows, Auto Layout translation, and Figma REST API/MCP integration (derived from [Figma Developer Platform](https://www.figma.com/developers/api))
 
 ## License
 
