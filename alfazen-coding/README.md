@@ -9,12 +9,13 @@ Reusable Agent Skills for software development, testing, git versioning, code re
 | **Code Efficiency & Architecture** | [`ponytail`](ponytail/SKILL.md), [`alfazen-versioning`](alfazen-versioning/SKILL.md), [`handoff`](handoff/SKILL.md) | Anti-bloat Decision Ladder, Git patch bumps, and project checkpointing |
 | **Engineering Methodology** | [`test-driven-development`](test-driven-development/SKILL.md), [`systematic-debugging`](systematic-debugging/SKILL.md), [`writing-plans`](writing-plans/SKILL.md), [`executing-plans`](executing-plans/SKILL.md), [`subagent-driven-development`](subagent-driven-development/SKILL.md), [`brainstorming`](brainstorming/SKILL.md) | Red-Green-Refactor TDD, root-cause isolation, plan execution, and subagent orchestration |
 | **Quality & Review** | [`requesting-code-review`](requesting-code-review/SKILL.md), [`receiving-code-review`](receiving-code-review/SKILL.md), [`verification-before-completion`](verification-before-completion/SKILL.md) | Subagent review dispatch, technical feedback evaluation, and evidence checks |
-| **Frontend, UX & Design** | [`ui-ux-pro-max`](ui-ux-pro-max/SKILL.md), [`impeccable`](impeccable/SKILL.md), [`figma`](figma/SKILL.md) | UI/UX intelligence database, design critique, and Figma token extraction |
+| **Frontend, UX & Design** | [`ui-ux-pro-max`](ui-ux-pro-max/SKILL.md), [`impeccable`](impeccable/SKILL.md), [`apple-design`](apple-design/SKILL.md), [`figma`](figma/SKILL.md) | UI/UX intelligence database, design critique, Apple HIG review, and Figma token extraction |
 | **Testing & Tooling** | [`playwright`](playwright/SKILL.md), [`github`](github/SKILL.md) | Headless browser testing, GitHub CLI automation, and CI/CD debugging |
 
-## All Included Skills (17)
+## All Included Skills (18)
 
 - **[`alfazen-versioning`](alfazen-versioning/SKILL.md)**: Bounded `m.n.p` versioning with per-commit patch bumps and `v{VERSION}-{BUILD}` UTC build IDs.
+- **[`apple-design`](apple-design/SKILL.md)**: Cross-platform UI/UX design review and audit grounded in Apple Human Interface Guidelines.
 - **[`brainstorming`](brainstorming/SKILL.md)**: Explore user intent, requirements, and design before implementation.
 - **[`executing-plans`](executing-plans/SKILL.md)**: Execute written implementation plans with review checkpoints.
 - **[`figma`](figma/SKILL.md)**: Figma REST API integration, design tokens, and SVG asset sync.
