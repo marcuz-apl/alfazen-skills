@@ -1,168 +1,87 @@
 ---
 name: alfazen-versioning
-description: Use when an AI coding assistant needs to establish or audit bounded m.n.p Git versioning, per-commit patch bumps, UTC yymmddc build identifiers, or v{VERSION}-{BUILD} commit-message hooks.
+description: Establish or audit modern Semantic Versioning (SemVer 2.0.0) with Alfazen UTC yymmddc build traceability, Git trailers, and CLI build injection.
 ---
 
-# Alfazen Versioning
+# Alfazen Versioning (v2.0)
 
-Apply one language-independent versioning contract to a Git project. Keep the
-VERSION number and BUILD number distinct, connect them as `v{VERSION}-{BUILD}`,
-and store that full identifier in a tracked root `VERSION` file.
+A developer- and open-source-friendly versioning standard that combines **Semantic Versioning (SemVer 2.0.0)** with Alfazen's signature **UTC daily build counter (`yymmddc`)**, clean Git trailers, and runtime CLI version stamping.
 
-## Identifier components
+---
 
-- The VERSION number is `m.n.p`. It is the project release/version component.
-- The BUILD number is `yymmddc`, such as `260821a`. It is the seven-character
-  UTC date-and-daily-counter component.
-- The connected identifier is `v{VERSION}-{BUILD}`, such as
-  `v1.0.9-260821a`. The lowercase `v` marks the VERSION number, and the dash
-  is the only separator between VERSION and BUILD.
-- The root `VERSION` file stores the connected identifier, not either component
-  by itself. Hooks must parse and update the two components separately.
+## 1. The Version Contract
 
-## Version contract
+### 1.1 Base Semantic Version (`m.n.p`)
+- Stored in a tracked root `VERSION` file as `m.n.p` (e.g., `0.1.0`).
+- **Initial Development**: New repositories begin at `0.1.0`. Major version zero signifies rapid, iterative development where APIs may evolve without breaking SemVer promises.
+- **Production Baseline**: Increment to `1.0.0` when the public API is stable, feature-complete, and production-ready.
+- **Unbounded SemVer Rules**:
+  - `m`, `n`, and `p` are non-negative decimal integers (`0.1.0` → `0.1.9` → `0.1.10`). Never clamp to single digits.
+  - Increment `p` (PATCH) for backward-compatible bug fixes and internal refinements.
+  - Increment `n` (MINOR) for backward-compatible new features.
+  - Increment `m` (MAJOR) strictly for breaking public API changes.
 
-- Initialize `VERSION` with `v1.0.0-<current UTC yymmdd>1` when it does not
-  exist. Treat that value as the baseline; the first hook-run commit advances
-  both the version and the daily counter.
-- Store the connected identifier as `v{VERSION}-{BUILD}`. The `yymmddc` BUILD number
-  is exactly seven characters: six UTC date digits followed by one lowercase
-  counter character.
-- Accept only `v{VERSION}-{BUILD}`, where VERSION is `m.n.p` and `m` is a non-negative decimal integer,
-  `n` and `p` are single digits `0`–`9`, and `yymmddc` follows the build rules
-  below. The concrete shape is `^v[0-9]+\.[0-9]\.[0-9]-[0-9]{6}[0-9a-z]$`.
-- When upgrading a legacy root `VERSION` containing `m.n.p-yymmddc`, prepend
-  exactly one lowercase `v` after validating the legacy components; do not
-  change either component during this migration.
-- Bump `p` for every commit that runs the hooks.
-- When `p` is `9`, reset it to `0` and increment `n`.
-- When `n` is `9`, reset it to `0` and increment `m`.
-- Therefore `1.0.8 → 1.0.9 → 1.1.0` and `1.9.9 → 2.0.0`.
-- Format the BUILD number as `yymmddc` using the current UTC date. For each UTC
-  day, use the counter sequence `1` through `9`, then `a` through `z`.
-- Reset the BUILD counter to `1` when the UTC date changes. If `z` has already
-  been used on the current UTC date, reject the next commit rather than reusing,
-  skipping, or silently changing a counter.
-- Reject malformed versions, invalid calendar dates, future-dated identifiers,
-  and exhausted daily counters; never silently clamp, skip, or repair a value.
-- Treat the root `VERSION` file as the single source of truth for both
-  components. Do not derive `m.n.p` from tags, commit count, or commit
-  messages; derive only the BUILD number from the current UTC date and the
-  prior `VERSION` value.
+### 1.2 Alfazen Build Identifier (`+yymmddc`)
+- Formatted as SemVer **build metadata** using the `+` delimiter: `v<m.n.p>+<yymmddc>` (e.g., `v0.1.0+2609031`).
+- The `yymmddc` suffix is exactly 7 characters:
+  - 6 UTC date digits: `YYMMDD` (e.g., `260903` for 2026-09-03 UTC).
+  - 1 daily sequence counter `c`: rolls `1` through `9`, then `a` through `z`.
+  - Resets to `1` when the UTC calendar date advances.
+- **Package Manager Compliance**: Under SemVer 2.0.0 (Rule #10), build metadata is ignored for version precedence. Package managers (Go proxy, Cargo, npm) treat `0.1.0+2609031` as fully compatible with `0.1.0`.
 
-## Configure a repository
+---
 
-1. Read the repository instructions and existing Git configuration first.
-2. Confirm the project wants this contract before changing files.
-3. Create a tracked root `VERSION` containing `1.0.0-<current UTC yymmdd>1` if
-   absent.
-4. Create a versioned `.githooks/` directory.
-5. Activate it with:
+## 2. Git & Commit Integration
 
+### 2.1 Commit Message Subject (Row 1)
+- The first line must be a pure **Conventional Commit** without version prefixes:
+  ```text
+  feat: add markdown converter
+  fix: handle nil pointer in browser lease
+  ```
+- **Rationale**: Ensures 100% compatibility with standard open-source tooling (`commitlint`, automated changelogs, GitHub PR merge squashers) and creates zero friction for external contributors.
+
+### 2.2 Commit Trailer (Git Footer)
+- Place the build identifier in a standard Git trailer at the end of the commit message:
+  ```text
+  feat: add markdown converter
+
+  Alfazen-Build: v0.1.0+2609031
+  ```
+- Automated via `.githooks/prepare-commit-msg` (or local release script).
+- Inspectable using standard Git commands:
+  ```sh
+  git log --format="%(trailers:key=Alfazen-Build)"
+  ```
+
+---
+
+## 3. Application / CLI Runtime Stamping
+
+Binaries and libraries report their full build identifier when invoked with `--version` or `-v`:
+
+```text
+<app> version v0.1.0+2609031 (commit 9a3b1de, built 2026-09-03T10:00:00Z)
+```
+
+In Go, inject this at compile time via `-ldflags`:
+```sh
+go build -ldflags "-X main.version=v0.1.0+$(BUILD_ID) -X main.commit=$(GIT_SHA) -X main.date=$(BUILD_DATE)" -o bin/<app> ./cmd/<app>
+```
+When built via `go install`, fall back gracefully to `runtime/debug.ReadBuildInfo()`.
+
+---
+
+## 4. Repository Configuration Checklist
+
+1. **Root `VERSION` File**:
+   Create a tracked `VERSION` containing the base version (e.g. `0.1.0`).
+2. **Git Hook (`.githooks/prepare-commit-msg`)**:
+   Reads `VERSION`, determines today's UTC counter `c`, and appends `Alfazen-Build: v<m.n.p>+<yymmddc>` to the commit trailer without altering the subject line.
+3. **Hook Activation**:
    ```sh
    git config core.hooksPath .githooks
    ```
-
-6. Keep hook entrypoints thin and place reusable version logic in a small
-   project-local script.
-7. Run the validation checklist before claiming completion.
-
-## Required hooks
-
-### `.githooks/pre-commit`
-
-Read the root `VERSION` file, validate the connected `v{VERSION}-{BUILD}` identifier,
-compute exactly one next identifier, write only `VERSION`, and stage only
-`VERSION`. Preserve every other staged file and its staged contents. Increment
-`p` with the normal carry rules, then advance the daily counter or reset it to
-`1` for a new UTC date.
-
-If the commit is rejected or aborted after the bump, explain that the working
-tree may contain the incremented version. Offer this safe rollback path when a
-previous commit exists:
-
-```sh
-git restore --source=HEAD --staged --worktree -- VERSION
-```
-
-Do not replace this with `post-commit`; the commit must contain the new version.
-Do not create an automatic follow-up commit.
-
-### `.githooks/prepare-commit-msg`
-
-Git invokes this hook after `pre-commit` in the normal commit flow. Read the
-already-bumped connected identifier from `VERSION` and rewrite only the first
-non-comment subject line. Use this exact prefix format:
-
-```text
-v{VERSION}-{BUILD} feat: original message
-```
-
-Example:
-
-```text
-v1.1.0-260816a feat: add parser
-```
-
-Strip one existing matching `v{VERSION}-{BUILD}` prefix before adding the
-current prefix. This must be idempotent for repeated execution, amend, rebase,
-and cherry-pick. Preserve the message body, blank lines, and trailers. Preserve
-the original Conventional Commit type; `feat:` is used for feature commits, but
-never turn `fix:` or another type into `feat:`.
-
-Use a locale-independent UTC formatter. On Windows, remember that Git executes
-POSIX shell hooks through its bundled shell; do not assume the current working
-directory or a Unix-only external installation.
-
-## Commit policy
-
-Default to stamping every commit for which the hooks run, including merge,
-empty, amend, cherry-pick, and rebase-created commits. Document any deliberate
-project-specific exception.
-
-Client hooks can be bypassed with `--no-verify`; do not claim they enforce a
-team-wide policy. If enforcement matters, add CI or server-side validation as a
-separate, explicitly requested change.
-
-Do not add a database, hidden write bypass, feature-flagged source mutation,
-unrelated release automation, or a second version source.
-
-## Validation checklist
-
-Use a disposable test repository or temporary clone. Verify:
-
-- `1.0.9` becomes `1.1.0`.
-- `1.9.9` becomes `2.0.0`.
-- A normal commit contains the bumped `VERSION` and one subject stamped as
-  `v{VERSION}-{BUILD} <original type>: <original subject>`.
-- The daily counter advances `9 → a`, and `z` is rejected when no new UTC day
-  has started; a new UTC day resets the counter to `1`.
-- The connected value remains intact across version carries, for example
-  `v1.0.9-260815z → v1.1.0-2608161` when the date changes.
-- A commit with staged files besides `VERSION` preserves those files.
-- Amend does not duplicate the prefix and bumps once.
-- Repeated `prepare-commit-msg` execution does not duplicate the prefix.
-- Message bodies and trailers are unchanged.
-- Malformed, invalid-date, future-dated, and same-day-exhausted identifiers are
-  rejected without a silent correction.
-- Only `VERSION` is modified by `pre-commit`.
-- `git config --get core.hooksPath` returns `.githooks`.
-- Hashing an image or other test source before and after any project-specific
-  workflow shows exact equality when source integrity matters.
-
-Inspect the final subject with `git log -1 --format=%s` and the final staged
-set with `git diff --cached --name-only`.
-
-## Common mistakes
-
-- Rewriting the message in `pre-commit`: use `prepare-commit-msg`.
-- Reading the old version in `prepare-commit-msg`: read the bumped `VERSION`.
-- Using local time: format the `yymmdd` date in UTC.
-- Treating the build as eight characters or numeric-only: it is six date
-  digits plus one counter character, with `a`–`z` after `9`.
-- Reusing `z` after 35 same-day builds: reject until the UTC date changes.
-- Staging all files from the hook: stage only `VERSION`.
-- Appending metadata during amend/rebase: strip the matching prefix first.
-- Changing commit types: preserve `fix:`, `docs:`, `refactor:`, and other
-  existing types.
-- Claiming hooks cannot be bypassed: disclose the `--no-verify` limitation.
+   *Note: Local hooks are optional for external PR contributors and can be verified or stamped by CI.*
+4. **Build Automation**:
+   Provide a `Makefile` or build script that calculates `BUILD_ID` (`yymmddc`) and passes `-ldflags` to the compiler.
