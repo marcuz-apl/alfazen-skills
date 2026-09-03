@@ -48,7 +48,7 @@ A developer- and open-source-friendly versioning standard that combines **Semant
 
   Alfazen-Build: v0.1.0+2609031
   ```
-- Automated via `.githooks/prepare-commit-msg` (or local release script).
+- Automated via `.githooks/prepare-commit-msg`.
 - Inspectable using standard Git commands:
   ```sh
   git log --format="%(trailers:key=Alfazen-Build)"
@@ -66,7 +66,7 @@ Binaries and libraries report their full build identifier when invoked with `--v
 
 In Go, inject this at compile time via `-ldflags`:
 ```sh
-go build -ldflags "-X main.version=v0.1.0+$(BUILD_ID) -X main.commit=$(GIT_SHA) -X main.date=$(BUILD_DATE)" -o bin/<app> ./cmd/<app>
+go build -ldflags "-X main.version=v$(./.githooks/alfazen-version id) -X main.commit=$(GIT_SHA) -X main.date=$(BUILD_DATE)" -o bin/<app> ./cmd/<app>
 ```
 When built via `go install`, fall back gracefully to `runtime/debug.ReadBuildInfo()`.
 
@@ -74,14 +74,31 @@ When built via `go install`, fall back gracefully to `runtime/debug.ReadBuildInf
 
 ## 4. Repository Configuration Checklist
 
+All versioning automation lives together inside `.githooks/`:
+
 1. **Root `VERSION` File**:
-   Create a tracked `VERSION` containing the base version (e.g. `0.1.0`).
-2. **Git Hook (`.githooks/prepare-commit-msg`)**:
-   Reads `VERSION`, determines today's UTC counter `c`, and appends `Alfazen-Build: v<m.n.p>+<yymmddc>` to the commit trailer without altering the subject line.
-3. **Hook Activation**:
+   Contains the base semantic version (e.g., `0.1.0`).
+
+2. **Unified Version Engine (`.githooks/alfazen-version`)**:
+   Single source of truth for computing build identifiers and stamping trailers:
+   - `alfazen-version id` -> prints `0.1.0+2609031` for build scripts.
+   - `alfazen-version hook "$@"` -> stamps `Alfazen-Build:` trailer on commit messages.
+
+3. **Git Hook Entrypoint (`.githooks/prepare-commit-msg`)**:
+   Thin dispatcher that delegates directly to the engine:
+   ```sh
+   #!/bin/sh
+   exec "$(dirname "$0")/alfazen-version" hook "$@"
+   ```
+
+4. **Hook Activation**:
    ```sh
    git config core.hooksPath .githooks
    ```
    *Note: Local hooks are optional for external PR contributors and can be verified or stamped by CI.*
-4. **Build Automation**:
-   Provide a `Makefile` or build script that calculates `BUILD_ID` (`yymmddc`) and passes `-ldflags` to the compiler.
+
+5. **Build Automation**:
+   In `Makefile`:
+   ```makefile
+   FULL_VERSION ?= $(shell ./.githooks/alfazen-version id 2>/dev/null || echo "0.1.0-dev")
+   ```
