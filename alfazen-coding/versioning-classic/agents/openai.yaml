@@ -1,0 +1,4 @@
+interface:
+  display_name: "Classic Versioning"
+  short_description: "Configure SemVer 2.0.0 with Git trailers (Alfazen-Build)"
+  default_prompt: "Use $versioning-classic to configure or audit a repository's SemVer 2.0.0 VERSION, UTC yymmddc build metadata, and Git trailer hooks."

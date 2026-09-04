@@ -1,0 +1,4 @@
+interface:
+  display_name: "Alfazen Versioning"
+  short_description: "Configure SemVer 2.0.0 with connected v{VERSION}+{BUILD} prefix and automated hooks"
+  default_prompt: "Use $versioning-alfazen to configure or audit a repository's SemVer 2.0.0 VERSION, daily UTC yymmddc build counter, and automated connected prefix Git hooks."
