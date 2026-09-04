@@ -6,7 +6,7 @@ Reusable Agent Skills collection organized into specialized domain bundles for A
 
 | Area | Included Skills | Focus & Highlights |
 |---|---|---|
-| **Code Efficiency & Architecture** | [`ponytail`](./alfazen-coding/ponytail), [`alfazen-versioning`](./alfazen-coding/alfazen-versioning), [`handoff`](./alfazen-coding/handoff) | Anti-bloat Decision Ladder, connected v{VERSION}-{BUILD} identifiers, and project checkpoints |
+| **Code Efficiency & Architecture** | [`ponytail`](./alfazen-coding/ponytail), [`versioning-alfazen`](./alfazen-coding/versioning-alfazen), [`versioning-classic`](./alfazen-coding/versioning-classic), [`handoff`](./alfazen-coding/handoff) | Anti-bloat Decision Ladder, connected v{VERSION}-{BUILD} identifiers, and project checkpoints |
 | **Engineering Methodology** | [`test-driven-development`](./alfazen-coding/test-driven-development), [`systematic-debugging`](./alfazen-coding/systematic-debugging), [`writing-plans`](./alfazen-coding/writing-plans), [`executing-plans`](./alfazen-coding/executing-plans), [`subagent-driven-development`](./alfazen-coding/subagent-driven-development), [`brainstorming`](./alfazen-coding/brainstorming) | Red-Green-Refactor TDD, root-cause isolation, plan execution, and subagent orchestration |
 | **Quality & Review** | [`requesting-code-review`](./alfazen-coding/requesting-code-review), [`receiving-code-review`](./alfazen-coding/receiving-code-review), [`verification-before-completion`](./alfazen-coding/verification-before-completion) | Subagent review dispatch, technical feedback verification, and evidence checks |
 | **Frontend, UX & Design** | [`ui-ux-pro-max`](./alfazen-coding/ui-ux-pro-max), [`impeccable`](./alfazen-coding/impeccable), [`apple-design`](./alfazen-coding/apple-design), [`figma`](./alfazen-coding/figma) | UI/UX intelligence database, design critique, Apple HIG review, and Figma token extraction |
@@ -17,13 +17,14 @@ Reusable Agent Skills collection organized into specialized domain bundles for A
 
 ## Skill Bundles
 
-### 1. [`alfazen-coding`](./alfazen-coding) (18 Skills)
+### 1. [`alfazen-coding`](./alfazen-coding) (19 Skills)
 
 Workflows for software engineering, testing, git versioning, code reviews, and UI/UX design:
 
 | Skill | Description |
 |---|---|
-| [`alfazen-versioning`](./alfazen-coding/alfazen-versioning) | Bounded `m.n.p` VERSION numbers connected as `v{VERSION}-{BUILD}` to UTC `yymmddc` BUILD numbers |
+| [`versioning-alfazen`](./alfazen-coding/versioning-alfazen) | Default Alfazen SemVer 2.0.0 protocol with connected `v{VERSION}+{BUILD}` subject prefix and automated hooks |
+| [`versioning-classic`](./alfazen-coding/versioning-classic) | Strict Conventional Commits standard with SemVer 2.0.0 and `Alfazen-Build:` Git trailers |
 | [`apple-design`](./alfazen-coding/apple-design) | Cross-platform UI/UX design review and audit grounded in Apple Human Interface Guidelines |
 | [`brainstorming`](./alfazen-coding/brainstorming) | Explores intent, requirements, and design before creative or implementation work |
 | [`executing-plans`](./alfazen-coding/executing-plans) | Executes implementation plans in separate sessions with review checkpoints |
@@ -114,7 +115,7 @@ Copy or symlink any skill directory into your personal agent skill directory:
 For Gemini CLI, you can link directly from your local clone:
 
 ```sh
-gemini skills link ./alfazen-coding/alfazen-versioning --scope user
+gemini skills link ./alfazen-coding/versioning-alfazen --scope user
 ```
 
 ---
@@ -124,7 +125,8 @@ gemini skills link ./alfazen-coding/alfazen-versioning --scope user
 This repository curates and packages agent skills from the open-source community and original internal creations:
 
 - **[Alfazen Inc.](https://alfazen.org)**:
-  - `alfazen-versioning` — Bounded `m.n.p` VERSION numbers connected as `v{VERSION}-{BUILD}` to UTC `yymmddc` BUILD numbers.
+  - `versioning-alfazen` — Default Alfazen SemVer 2.0.0 protocol with connected `v{VERSION}+{BUILD}` subject prefix and automated hooks.
+  - `versioning-classic` — Strict Conventional Commits standard with SemVer 2.0.0 and `Alfazen-Build:` Git trailers.
   - `handoff` — Checkpoint and safe project resumption skill (product of Alfazen Inc.).
 - **[Apple Design Skill](https://github.com/dickwu/apple-design-skill)** by Dick Wu:
   - `apple-design` — Cross-platform UI/UX design review and audit system grounded in Apple Human Interface Guidelines (HIG).

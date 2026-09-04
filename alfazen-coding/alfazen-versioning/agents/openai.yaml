@@ -1,4 +1,0 @@
-interface:
-  display_name: "Alfazen Versioning"
-  short_description: "Configure v{VERSION}-{BUILD} Git identifiers with daily yymmddc builds"
-  default_prompt: "Use $alfazen-versioning to configure or audit a repository's m.n.p VERSION number, yymmddc BUILD number, and connected v{VERSION}-{BUILD} Git hooks."
