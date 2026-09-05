@@ -32,15 +32,23 @@ Alfazen Versioning enforces standard **Semantic Versioning (SemVer 2.0.0)** sync
 | `docs:` / `chore:` / `style:` / `refactor:` / `test:` | **Build-only** | Automated $\implies$ Keep `m.n.p`, roll build counter | `v2.2.1+2609053` $\to$ `v2.2.1+2609054` |
 
 > [!CAUTION]
-> ### MANDATORY APPROVAL GATE FOR MAJOR (`m`) INCREMENTS
+> ### MANDATORY ADVISORY & APPROVAL GATE FOR MAJOR (`m`) INCREMENTS
 > **Automatic incrementing of the Major version (`m`) is strictly prohibited.**
-> Bumping `m` signifies breaking public API contracts, fundamental architectural pivots, or irreversible schema migrations.
-> **Coding agents and automated pipelines MUST ALWAYS ask and obtain explicit approval from the USER before advancing `m`**.
-> Even when encountering `feat!:` or `BREAKING CHANGE:`, an agent must never bump `m` autonomously. If the user has not explicitly sanctioned a major version transition, the change must be staged as a Minor (`n`) feature increment.
+> Because bumping `m` signifies a massive milestone, breaking public API contracts, or fundamental architectural transitions, the system must never make this decision unilaterally.
+>
+> **The Advisory & Confirmation Protocol:**
+> 1. **System Detection**: When the agent or automated pipeline senses that current changes warrant a Major increment (e.g. breaking API changes, core architecture rewrites, or fundamental paradigm shifts):
+> 2. **Explicit Advisory to Project Owner**: The system **MUST explicitly advise the project owner/user**, presenting:
+>    - **Rationale**: What breaking changes or major milestones justify advancing `m`.
+>    - **Proposed Version**: The exact version transition (e.g. `v2.8.1` $\to$ `v3.0.0`).
+>    - **Call to Action**: Explicitly ask the project owner for permission to increment `m`.
+> 3. **Strict Gate Execution**:
+>    - **Approved**: Only upon receiving the owner's explicit written approval may `m` be incremented (`m+1.0.0`).
+>    - **Unapproved / Pending**: If approval is not explicitly granted, the system MUST stay within the current major series, staging the changes as a Minor (`n`) feature increment.
 
 #### Rules for Coding Agents & Automation
 - **Never let `m.n.p` stagnate**: When adding new user-facing features or fixing bugs, the agent/developer MUST advance `n` (for `feat`) or `p` (for `fix`) alongside the daily build counter.
-- **Explicit Approval for `m`**: Never increment `m` automatically. Always prompt the user for confirmation first.
+- **Advise Owner on `m`**: When a major version increment is warranted, always advise the project owner first and wait for explicit confirmation. Never bump `m` autonomously.
 - **Milestone & Sprint Calibration**: If multiple rapid commits occur within a feature sprint, each distinct functional capability increments `n` or `p` to guarantee high-fidelity auditability.
 
 ---
