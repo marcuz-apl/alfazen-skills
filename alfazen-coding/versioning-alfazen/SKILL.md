@@ -21,15 +21,27 @@ The signature versioning standard for Alfazen projects and applications. Combine
   - Resets to `1` when the UTC calendar date advances.
 
 ### 1.2 Routine Commit vs. Milestone Lifecycle
-- **Routine Commits (Build Advances)**:
-  - The base SemVer (`m.n.p`) **remains stable** across regular feature work, fixes, and daily commits.
-  - The Git hook automatically advances only the daily counter:
-    ```text
-    v0.6.0+2609041 -> v0.6.0+2609042 -> v0.6.0+2609043
-    ```
-- **Intentional Milestone Bumps (Minor / Major Releases)**:
-  - When reaching a major milestone, rebranding, or breaking API transition (e.g. `0.5.2` -> `0.6.0`), the developer or release workflow explicitly updates the baseline in `VERSION` and project manifests (`pyproject.toml`, `package.json`).
-  - Subsequent commits immediately inherit and roll from the new `0.6.0` baseline.
+
+Alfazen Versioning enforces standard **Semantic Versioning (SemVer 2.0.0)** synchronized with **Conventional Commits**:
+
+| Commit Type | Semantic Level | SemVer Action | Example Transition |
+| :--- | :--- | :--- | :--- |
+| `feat!:` / `fix!:` / `BREAKING CHANGE:` | **Major (`m`)** | **REQUIRES EXPLICIT USER APPROVAL** $\implies$ Increment `m`, reset `n=0, p=0` | `v2.8.1+2609051` $\to$ `v3.0.0+2609052` |
+| `feat:` / `feat(...):` | **Minor (`n`)** | Automated $\implies$ Increment `n`, reset `p=0` | `v2.1.0+2609051` $\to$ `v2.2.0+2609052` |
+| `fix:` / `fix(...):` / `perf:` | **Patch (`p`)** | Automated $\implies$ Increment `p` | `v2.2.0+2609052` $\to$ `v2.2.1+2609053` |
+| `docs:` / `chore:` / `style:` / `refactor:` / `test:` | **Build-only** | Automated $\implies$ Keep `m.n.p`, roll build counter | `v2.2.1+2609053` $\to$ `v2.2.1+2609054` |
+
+> [!CAUTION]
+> ### MANDATORY APPROVAL GATE FOR MAJOR (`m`) INCREMENTS
+> **Automatic incrementing of the Major version (`m`) is strictly prohibited.**
+> Bumping `m` signifies breaking public API contracts, fundamental architectural pivots, or irreversible schema migrations.
+> **Coding agents and automated pipelines MUST ALWAYS ask and obtain explicit approval from the USER before advancing `m`**.
+> Even when encountering `feat!:` or `BREAKING CHANGE:`, an agent must never bump `m` autonomously. If the user has not explicitly sanctioned a major version transition, the change must be staged as a Minor (`n`) feature increment.
+
+#### Rules for Coding Agents & Automation
+- **Never let `m.n.p` stagnate**: When adding new user-facing features or fixing bugs, the agent/developer MUST advance `n` (for `feat`) or `p` (for `fix`) alongside the daily build counter.
+- **Explicit Approval for `m`**: Never increment `m` automatically. Always prompt the user for confirmation first.
+- **Milestone & Sprint Calibration**: If multiple rapid commits occur within a feature sprint, each distinct functional capability increments `n` or `p` to guarantee high-fidelity auditability.
 
 ---
 
@@ -81,11 +93,45 @@ validate_identifier() {
   [ "$bdate" -le "$today" ] || die "future-dated BUILD in '$id'"
 }
 
+detect_bump_type() {
+  msg=$1
+  case "$msg" in
+    *BREAKING\ CHANGE*|*!:\ *) echo "major_requires_approval" ;;
+    feat:*|feat\(*\):*)        echo "minor" ;;
+    fix:*|fix\(*\):*|perf:*)   echo "patch" ;;
+    *)                         echo "build" ;;
+  esac
+}
+
+bump_semver() {
+  ver=$1; bump=$2
+  raw=${ver#v}
+  m=$(echo "$raw" | cut -d. -f1)
+  n=$(echo "$raw" | cut -d. -f2)
+  p=$(echo "$raw" | cut -d. -f3)
+
+  case "$bump" in
+    major)
+      [ "${ALFAZEN_MAJOR_APPROVED:-0}" = "1" ] || die "Major version bump (m) requires explicit user approval. Set ALFAZEN_MAJOR_APPROVED=1 to proceed."
+      echo "v$((m + 1)).0.0"
+      ;;
+    major_requires_approval)
+      die "Major version bump (m) detected. Major version increments require explicit user approval. Set ALFAZEN_MAJOR_APPROVED=1 to proceed, or stage as minor/patch."
+      ;;
+    minor) echo "v${m}.$((n + 1)).0" ;;
+    patch) echo "v${m}.${n}.$((p + 1))" ;;
+    *)     echo "v${m}.${n}.${p}" ;;
+  esac
+}
+
 next_identifier() {
-  old=$1; today=$2
+  old=$1; today=$2; bump=${3:-build}
   case $old in *+*) ver=${old%+*}; build=${old#*+} ;; *-*) ver=${old%-*}; build=${old#*-} ;; esac
   bdate=${build%?}
   bctr=${build#??????}
+
+  # Apply semantic bump if requested
+  ver=$(bump_semver "$ver" "$bump")
 
   if [ "$bdate" != "$today" ]; then
     nctr=1
