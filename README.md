@@ -17,7 +17,7 @@ Reusable Agent Skills collection organized into specialized domain bundles for A
 
 ## Skill Bundles
 
-### 1. [`alfazen-coding`](./alfazen-coding) (19 Skills)
+### 1. [`alfazen-coding`](./alfazen-coding) (20 Skills)
 
 Workflows for software engineering, testing, git versioning, code reviews, and UI/UX design:
 
@@ -25,6 +25,7 @@ Workflows for software engineering, testing, git versioning, code reviews, and U
 |---|---|
 | [`versioning-alfazen`](./alfazen-coding/versioning-alfazen) | Default Alfazen SemVer 2.0.0 protocol with connected `v{VERSION}+{BUILD}` subject prefix and automated hooks |
 | [`versioning-classic`](./alfazen-coding/versioning-classic) | Strict Conventional Commits standard with SemVer 2.0.0 and `Alfazen-Build:` Git trailers |
+| [`changelog-curator`](./alfazen-coding/changelog-curator) | AI-driven architectural changelog synthesis, milestone chronicle curation, and release notes management |
 | [`apple-design`](./alfazen-coding/apple-design) | Cross-platform UI/UX design review and audit grounded in Apple Human Interface Guidelines |
 | [`brainstorming`](./alfazen-coding/brainstorming) | Explores intent, requirements, and design before creative or implementation work |
 | [`executing-plans`](./alfazen-coding/executing-plans) | Executes implementation plans in separate sessions with review checkpoints |
@@ -128,6 +129,7 @@ This repository curates and packages agent skills from the open-source community
   - `versioning-alfazen` — Default Alfazen SemVer 2.0.0 protocol with connected `v{VERSION}+{BUILD}` subject prefix and automated hooks.
   - `versioning-classic` — Strict Conventional Commits standard with SemVer 2.0.0 and `Alfazen-Build:` Git trailers.
   - `handoff` — Checkpoint and safe project resumption skill (product of Alfazen Inc.).
+  - `changelog-curator` — AI-driven architectural changelog synthesis, milestone chronicle curation, and release notes management (product of Alfazen Inc.).
 - **[Apple Design Skill](https://github.com/dickwu/apple-design-skill)** by Dick Wu:
   - `apple-design` — Cross-platform UI/UX design review and audit system grounded in Apple Human Interface Guidelines (HIG).
 - **[Remotion Skills](https://github.com/remotion-dev/skills)** by Remotion Team:

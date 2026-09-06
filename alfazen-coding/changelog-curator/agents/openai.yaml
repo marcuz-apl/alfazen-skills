@@ -1,0 +1,4 @@
+interface:
+  display_name: "Changelog Curator"
+  short_description: "Architectural changelog synthesis, milestone chronicle curation, and release notes management"
+  default_prompt: "Use $changelog-curator to draft, update, or audit CHANGELOG.md with semantic progression trees, milestone taxonomies, and GitHub release notes."

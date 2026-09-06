@@ -1,9 +1,19 @@
-#!/usr/bin/env sh
-set -eu
+#!/bin/sh
+HOOKDIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+. "$HOOKDIR/versionlib.sh"
 
-message_file=$1
-root=$(git rev-parse --show-toplevel)
-. "$root/.githooks/versioning.sh"
-current=$(versioning_current)
-versioning_validate "$current"
-versioning_stamp_message "$message_file" "$current"
+msgfile=$1
+[ -f "$msgfile" ] || exit 0
+ver=$(read_version) || exit 1
+validate_identifier "$ver"
+
+tmp=$(mktemp) || exit 1
+awk -v stamp="$ver" '
+  !done && $0 !~ /^#/ {
+    sub(/^v[0-9]+\.[0-9]+\.[0-9]+[+-][0-9][0-9][0-9][0-9][0-9][0-9][0-9a-z] /, "")
+    print stamp " " $0
+    done = 1
+    next
+  }
+  { print }
+' "$msgfile" > "$tmp" && mv -f -- "$tmp" "$msgfile"
