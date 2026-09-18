@@ -27,9 +27,9 @@ Alfazen Versioning enforces standard **Semantic Versioning (SemVer 2.0.0)** sync
 | Commit Type | Semantic Level | SemVer Action | Example Transition |
 | :--- | :--- | :--- | :--- |
 | `feat!:` / `fix!:` / `BREAKING CHANGE:` | **Major (`m`)** | **REQUIRES EXPLICIT USER APPROVAL** $\implies$ Increment `m`, reset `n=0, p=0` | `v2.8.1+2609051` $\to$ `v3.0.0+2609052` |
-| `feat:` / `feat(...):` | **Minor (`n`)** | Automated $\implies$ Increment `n`, reset `p=0` | `v2.1.0+2609051` $\to$ `v2.2.0+2609052` |
-| `fix:` / `fix(...):` / `perf:` | **Patch (`p`)** | Automated $\implies$ Increment `p` | `v2.2.0+2609052` $\to$ `v2.2.1+2609053` |
-| `docs:` / `chore:` / `style:` / `refactor:` / `test:` | **Build-only** | Automated $\implies$ Keep `m.n.p`, roll build counter | `v2.2.1+2609053` $\to$ `v2.2.1+2609054` |
+| `release(minor):` | **Minor (`n`)** | Explicit release only: increment `n`, reset `p=0` | `v2.1.0+2609051` $\to$ `v2.2.0+2609052` |
+| `release(patch):` | **Patch (`p`)** | Explicit release only: increment `p` | `v2.2.0+2609052` $\to$ `v2.2.1+2609053` |
+| All ordinary commits, including `feat:`, `fix:`, docs, chores, and design work | **Build-only** | Keep `m.n.p`, roll build counter | `v2.2.1+2609053` $\to$ `v2.2.1+2609054` |
 
 > [!CAUTION]
 > ### MANDATORY ADVISORY & APPROVAL GATE FOR MAJOR (`m`) INCREMENTS
@@ -47,7 +47,7 @@ Alfazen Versioning enforces standard **Semantic Versioning (SemVer 2.0.0)** sync
 >    - **Unapproved / Pending**: If approval is not explicitly granted, the system MUST stay within the current major series, staging the changes as a Minor (`n`) feature increment.
 
 #### Rules for Coding Agents & Automation
-- **Never let `m.n.p` stagnate**: When adding new user-facing features or fixing bugs, the agent/developer MUST advance `n` (for `feat`) or `p` (for `fix`) alongside the daily build counter.
+- **Release-oriented SemVer**: Ordinary commits keep `m.n.p` stable. Use `release(minor):` or `release(patch):` only when the owner explicitly declares a public release.
 - **Advise Owner on `m`**: When a major version increment is warranted, always advise the project owner first and wait for explicit confirmation. Never bump `m` autonomously.
 - **Milestone & Sprint Calibration**: If multiple rapid commits occur within a feature sprint, each distinct functional capability increments `n` or `p` to guarantee high-fidelity auditability.
 
@@ -105,8 +105,8 @@ detect_bump_type() {
   msg=$1
   case "$msg" in
     *BREAKING\ CHANGE*|*!:\ *) echo "major_requires_approval" ;;
-    feat:*|feat\(*\):*)        echo "minor" ;;
-    fix:*|fix\(*\):*|perf:*)   echo "patch" ;;
+    release\(minor\):*)        echo "minor" ;;
+    release\(patch\):*)        echo "patch" ;;
     *)                         echo "build" ;;
   esac
 }

@@ -14,7 +14,7 @@ Reusable Agent Skills for software development, testing, git versioning, code re
 
 ## All Included Skills (20)
 
-- **[`alfazen-versioning`](alfazen-versioning/SKILL.md)**: Bounded `m.n.p` versioning with per-commit patch bumps and `v{VERSION}-{BUILD}` UTC build IDs.
+- **[`alfazen-versioning`](alfazen-versioning/SKILL.md)**: Release-oriented `m.n.p` versioning with per-commit UTC build IDs.
 - **[`apple-design`](apple-design/SKILL.md)**: Cross-platform UI/UX design review and audit grounded in Apple Human Interface Guidelines.
 - **[`changelog-curator`](changelog-curator/SKILL.md)**: AI-driven architectural changelog synthesis, milestone chronicle curation, and release notes management.
 - **[`brainstorming`](brainstorming/SKILL.md)**: Explore user intent, requirements, and design before implementation.
