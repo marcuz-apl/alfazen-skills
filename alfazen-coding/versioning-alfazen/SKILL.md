@@ -17,7 +17,7 @@ The signature versioning standard for Alfazen projects and applications. Combine
 - **Build Delimiter (`+`)**: Complies strictly with SemVer 2.0.0 (Rule #10) build metadata. Package managers (PyPI, npm, Go proxy, Cargo) treat `0.6.0+2609041` as fully compatible with `0.6.0`.
 - **Daily Build Suffix (`yymmddc`)**: Exactly 7 characters:
   - 6 UTC date digits: `YYMMDD` (e.g., `260904` for September 4, 2026 UTC).
-  - 1 daily sequence counter `c`: rolls `1` through `9`, then `a` through `z`.
+  - 1 daily sequence counter `c`: rolls `1` through `9`, then `a` through `z`, then `A` through `Z`.
   - Resets to `1` when the UTC calendar date advances.
 
 ### 1.2 Routine Commit vs. Milestone Lifecycle
@@ -80,7 +80,7 @@ Place these two scripts under `.githooks/` and activate with `git config core.ho
 ```sh
 #!/bin/sh
 VERSION_FILE=VERSION
-IDENT_RE='^v[0-9]+\.[0-9]+\.[0-9]+[+-][0-9]{6}[0-9a-z]$'
+IDENT_RE='^v[0-9]+\.[0-9]+\.[0-9]+[+-][0-9]{6}[0-9a-zA-Z]$'
 
 die() { echo "alfazen-versioning: $*" >&2; exit 1; }
 utc_yymmdd() { TZ=UTC LC_ALL=C date -u +%y%m%d; }
@@ -148,7 +148,9 @@ next_identifier() {
       [1-8]) nctr=$((bctr + 1)) ;;
       9)     nctr=a ;;
       [a-y]) nctr=$(printf '%s' "$bctr" | tr 'a-y' 'b-z') ;;
-      z)     die "daily counter exhausted for $today" ;;
+      z)     nctr=A ;;
+      [A-Y]) nctr=$(printf '%s' "$bctr" | tr 'A-Y' 'B-Z') ;;
+      Z)     die "daily counter exhausted for $today" ;;
       *)     die "invalid counter '$bctr'" ;;
     esac
   fi
@@ -184,7 +186,7 @@ validate_identifier "$ver"
 tmp=$(mktemp) || exit 1
 awk -v stamp="$ver" '
   !done && $0 !~ /^#/ {
-    sub(/^v[0-9]+\.[0-9]+\.[0-9]+[+-][0-9][0-9][0-9][0-9][0-9][0-9][0-9a-z] /, "")
+    sub(/^v[0-9]+\.[0-9]+\.[0-9]+[+-][0-9][0-9][0-9][0-9][0-9][0-9][0-9a-zA-Z] /, "")
     print stamp " " $0
     done = 1
     next
