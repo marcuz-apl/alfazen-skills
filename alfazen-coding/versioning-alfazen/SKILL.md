@@ -29,7 +29,8 @@ Alfazen Versioning enforces standard **Semantic Versioning (SemVer 2.0.0)** sync
 | `feat!:` / `fix!:` / `BREAKING CHANGE:` | **Major (`m`)** | **REQUIRES EXPLICIT USER APPROVAL** $\implies$ Increment `m`, reset `n=0, p=0` | `v2.8.1+2609051` $\to$ `v3.0.0+2609052` |
 | `release(minor):` | **Minor (`n`)** | Explicit release only: increment `n`, reset `p=0` | `v2.1.0+2609051` $\to$ `v2.2.0+2609052` |
 | `release(patch):` | **Patch (`p`)** | Explicit release only: increment `p` | `v2.2.0+2609052` $\to$ `v2.2.1+2609053` |
-| All ordinary commits, including `feat:`, `fix:`, docs, chores, and design work | **Build-only** | Keep `m.n.p`, roll build counter | `v2.2.1+2609053` $\to$ `v2.2.1+2609054` |
+| `feat:` / `feat(scope):` | **Patch (`p`)** | Increment `p`, then roll build counter | `v2.2.1+2609053` $\to$ `v2.2.2+2609054` |
+| `fix:`, docs, chores, and design work | **Build-only** | Keep `m.n.p`, roll build counter | `v2.2.1+2609053` $\to$ `v2.2.1+2609054` |
 
 > [!CAUTION]
 > ### MANDATORY ADVISORY & APPROVAL GATE FOR MAJOR (`m`) INCREMENTS
@@ -47,7 +48,7 @@ Alfazen Versioning enforces standard **Semantic Versioning (SemVer 2.0.0)** sync
 >    - **Unapproved / Pending**: If approval is not explicitly granted, the system MUST stay within the current major series, staging the changes as a Minor (`n`) feature increment.
 
 #### Rules for Coding Agents & Automation
-- **Release-oriented SemVer**: Ordinary commits keep `m.n.p` stable. Use `release(minor):` or `release(patch):` only when the owner explicitly declares a public release.
+- **Feature patching**: Each `feat:` or `feat(scope):` commit increments `p`. Use `release(minor):` only when the owner explicitly declares a public release.
 - **Advise Owner on `m`**: When a major version increment is warranted, always advise the project owner first and wait for explicit confirmation. Never bump `m` autonomously.
 - **Milestone & Sprint Calibration**: If multiple rapid commits occur within a feature sprint, each distinct functional capability increments `n` or `p` to guarantee high-fidelity auditability.
 
@@ -107,6 +108,7 @@ detect_bump_type() {
     *BREAKING\ CHANGE*|*!:\ *) echo "major_requires_approval" ;;
     release\(minor\):*)        echo "minor" ;;
     release\(patch\):*)        echo "patch" ;;
+    feat:*|feat\(*\):*)         echo "patch" ;;
     *)                         echo "build" ;;
   esac
 }
