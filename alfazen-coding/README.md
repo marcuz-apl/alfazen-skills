@@ -6,15 +6,17 @@ Reusable Agent Skills for software development, testing, git versioning, code re
 
 | Area | Skills | Description |
 |---|---|---|
-| **Code Efficiency & Architecture** | [`ponytail`](ponytail/SKILL.md), [`versioning-alfazen`](versioning-alfazen/SKILL.md), [`versioning-classic`](versioning-classic/SKILL.md), [`changelog-curator`](changelog-curator/SKILL.md), [`handoff`](handoff/SKILL.md) | Anti-bloat Decision Ladder, SemVer 2.0.0 hooks, architectural changelogs, and project checkpointing |
+| **Code Efficiency & Architecture** | [`ponytail`](ponytail/SKILL.md), [`versioning-alfazen`](versioning-alfazen/SKILL.md), [`versioning-classic`](versioning-classic/SKILL.md), [`versioning-prefixed`](versioning-prefixed/SKILL.md), [`changelog-curator`](changelog-curator/SKILL.md), [`handoff`](handoff/SKILL.md) | Anti-bloat Decision Ladder, SemVer 2.0.0 hooks, architectural changelogs, and project checkpointing |
 | **Engineering Methodology** | [`test-driven-development`](test-driven-development/SKILL.md), [`systematic-debugging`](systematic-debugging/SKILL.md), [`writing-plans`](writing-plans/SKILL.md), [`executing-plans`](executing-plans/SKILL.md), [`subagent-driven-development`](subagent-driven-development/SKILL.md), [`brainstorming`](brainstorming/SKILL.md) | Red-Green-Refactor TDD, root-cause isolation, plan execution, and subagent orchestration |
 | **Quality & Review** | [`requesting-code-review`](requesting-code-review/SKILL.md), [`receiving-code-review`](receiving-code-review/SKILL.md), [`verification-before-completion`](verification-before-completion/SKILL.md) | Subagent review dispatch, technical feedback evaluation, and evidence checks |
 | **Frontend, UX & Design** | [`ui-ux-pro-max`](ui-ux-pro-max/SKILL.md), [`impeccable`](impeccable/SKILL.md), [`apple-design`](apple-design/SKILL.md), [`figma`](figma/SKILL.md) | UI/UX intelligence database, design critique, Apple HIG review, and Figma token extraction |
 | **Testing & Tooling** | [`playwright`](playwright/SKILL.md), [`github`](github/SKILL.md) | Headless browser testing, GitHub CLI automation, and CI/CD debugging |
 
-## All Included Skills (20)
+## All Included Skills (21)
 
-- **[`alfazen-versioning`](alfazen-versioning/SKILL.md)**: Release-oriented `m.n.p` versioning with per-commit UTC build IDs.
+- **[`versioning-alfazen`](versioning-alfazen/SKILL.md)**: Connected version and build identifier in `VERSION` and commit subjects.
+- **[`versioning-classic`](versioning-classic/SKILL.md)**: Plain `m.n.p` VERSION with unprefixed Conventional Commit subjects and build trailers.
+- **[`versioning-prefixed`](versioning-prefixed/SKILL.md)**: Plain `m.n.p` VERSION with UTC build-prefixed commit subjects and feature patch bumps.
 - **[`apple-design`](apple-design/SKILL.md)**: Cross-platform UI/UX design review and audit grounded in Apple Human Interface Guidelines.
 - **[`changelog-curator`](changelog-curator/SKILL.md)**: AI-driven architectural changelog synthesis, milestone chronicle curation, and release notes management.
 - **[`brainstorming`](brainstorming/SKILL.md)**: Explore user intent, requirements, and design before implementation.

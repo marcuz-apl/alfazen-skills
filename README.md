@@ -6,7 +6,7 @@ Reusable Agent Skills collection organized into specialized domain bundles for A
 
 | Area | Included Skills | Focus & Highlights |
 |---|---|---|
-| **Code Efficiency & Architecture** | [`ponytail`](./alfazen-coding/ponytail), [`versioning-alfazen`](./alfazen-coding/versioning-alfazen), [`versioning-classic`](./alfazen-coding/versioning-classic), [`handoff`](./alfazen-coding/handoff) | Anti-bloat Decision Ladder, connected v{VERSION}-{BUILD} identifiers, and project checkpoints |
+| **Code Efficiency & Architecture** | [`ponytail`](./alfazen-coding/ponytail), [`versioning-alfazen`](./alfazen-coding/versioning-alfazen), [`versioning-classic`](./alfazen-coding/versioning-classic), [`versioning-prefixed`](./alfazen-coding/versioning-prefixed), [`handoff`](./alfazen-coding/handoff) | Anti-bloat Decision Ladder, version and build identifiers, and project checkpoints |
 | **Engineering Methodology** | [`test-driven-development`](./alfazen-coding/test-driven-development), [`systematic-debugging`](./alfazen-coding/systematic-debugging), [`writing-plans`](./alfazen-coding/writing-plans), [`executing-plans`](./alfazen-coding/executing-plans), [`subagent-driven-development`](./alfazen-coding/subagent-driven-development), [`brainstorming`](./alfazen-coding/brainstorming) | Red-Green-Refactor TDD, root-cause isolation, plan execution, and subagent orchestration |
 | **Quality & Review** | [`requesting-code-review`](./alfazen-coding/requesting-code-review), [`receiving-code-review`](./alfazen-coding/receiving-code-review), [`verification-before-completion`](./alfazen-coding/verification-before-completion) | Subagent review dispatch, technical feedback verification, and evidence checks |
 | **Frontend, UX & Design** | [`ui-ux-pro-max`](./alfazen-coding/ui-ux-pro-max), [`impeccable`](./alfazen-coding/impeccable), [`apple-design`](./alfazen-coding/apple-design), [`figma`](./alfazen-coding/figma) | UI/UX intelligence database, design critique, Apple HIG review, and Figma token extraction |
@@ -17,7 +17,7 @@ Reusable Agent Skills collection organized into specialized domain bundles for A
 
 ## Skill Bundles
 
-### 1. [`alfazen-coding`](./alfazen-coding) (20 Skills)
+### 1. [`alfazen-coding`](./alfazen-coding) (21 Skills)
 
 Workflows for software engineering, testing, git versioning, code reviews, and UI/UX design:
 
@@ -25,6 +25,7 @@ Workflows for software engineering, testing, git versioning, code reviews, and U
 |---|---|
 | [`versioning-alfazen`](./alfazen-coding/versioning-alfazen) | Default Alfazen SemVer 2.0.0 protocol with connected `v{VERSION}+{BUILD}` subject prefix and automated hooks |
 | [`versioning-classic`](./alfazen-coding/versioning-classic) | Strict Conventional Commits standard with SemVer 2.0.0 and `Alfazen-Build:` Git trailers |
+| [`versioning-prefixed`](./alfazen-coding/versioning-prefixed) | Plain `m.n.p` VERSION with `v{VERSION}+{BUILD}` commit subject prefix and feature patch bumps |
 | [`changelog-curator`](./alfazen-coding/changelog-curator) | AI-driven architectural changelog synthesis, milestone chronicle curation, and release notes management |
 | [`apple-design`](./alfazen-coding/apple-design) | Cross-platform UI/UX design review and audit grounded in Apple Human Interface Guidelines |
 | [`brainstorming`](./alfazen-coding/brainstorming) | Explores intent, requirements, and design before creative or implementation work |
@@ -128,6 +129,7 @@ This repository curates and packages agent skills from the open-source community
 - **[Alfazen Inc.](https://alfazen.org)**:
   - `versioning-alfazen` — Default Alfazen SemVer 2.0.0 protocol with connected `v{VERSION}+{BUILD}` subject prefix and automated hooks.
   - `versioning-classic` — Strict Conventional Commits standard with SemVer 2.0.0 and `Alfazen-Build:` Git trailers.
+  - `versioning-prefixed` — Plain `m.n.p` VERSION with UTC build-prefixed commit subjects and feature patch bumps.
   - `handoff` — Checkpoint and safe project resumption skill (product of Alfazen Inc.).
   - `changelog-curator` — AI-driven architectural changelog synthesis, milestone chronicle curation, and release notes management (product of Alfazen Inc.).
 - **[Apple Design Skill](https://github.com/dickwu/apple-design-skill)** by Dick Wu:
