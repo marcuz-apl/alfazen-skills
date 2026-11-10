@@ -25,7 +25,7 @@ Workflows for software engineering, testing, git versioning, code reviews, and U
 |---|---|
 | [`versioning-alfazen`](./alfazen-coding/versioning-alfazen) | Default Alfazen SemVer 2.0.0 protocol with connected `v{VERSION}+{BUILD}` subject prefix and automated hooks |
 | [`versioning-classic`](./alfazen-coding/versioning-classic) | Strict Conventional Commits standard with SemVer 2.0.0 and `Alfazen-Build:` Git trailers |
-| [`versioning-prefixed`](./alfazen-coding/versioning-prefixed) | Plain `m.n.p` VERSION with `v{VERSION}+{BUILD}` commit subject prefix and feature patch bumps |
+| [`versioning-prefixed`](./alfazen-coding/versioning-prefixed) | Plain `m.n.p` VERSION with `v{VERSION}` commit subject prefix, build trailer, and feature patch bumps |
 | [`changelog-curator`](./alfazen-coding/changelog-curator) | AI-driven architectural changelog synthesis, milestone chronicle curation, and release notes management |
 | [`apple-design`](./alfazen-coding/apple-design) | Cross-platform UI/UX design review and audit grounded in Apple Human Interface Guidelines |
 | [`brainstorming`](./alfazen-coding/brainstorming) | Explores intent, requirements, and design before creative or implementation work |
@@ -129,7 +129,7 @@ This repository curates and packages agent skills from the open-source community
 - **[Alfazen Inc.](https://alfazen.org)**:
   - `versioning-alfazen` — Default Alfazen SemVer 2.0.0 protocol with connected `v{VERSION}+{BUILD}` subject prefix and automated hooks.
   - `versioning-classic` — Strict Conventional Commits standard with SemVer 2.0.0 and `Alfazen-Build:` Git trailers.
-  - `versioning-prefixed` — Plain `m.n.p` VERSION with UTC build-prefixed commit subjects and feature patch bumps.
+  - `versioning-prefixed` — Plain `m.n.p` VERSION with a version-only subject prefix, build trailer, and feature patch bumps.
   - `handoff` — Checkpoint and safe project resumption skill (product of Alfazen Inc.).
   - `changelog-curator` — AI-driven architectural changelog synthesis, milestone chronicle curation, and release notes management (product of Alfazen Inc.).
 - **[Apple Design Skill](https://github.com/dickwu/apple-design-skill)** by Dick Wu:

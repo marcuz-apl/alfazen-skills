@@ -16,7 +16,7 @@ Reusable Agent Skills for software development, testing, git versioning, code re
 
 - **[`versioning-alfazen`](versioning-alfazen/SKILL.md)**: Connected version and build identifier in `VERSION` and commit subjects.
 - **[`versioning-classic`](versioning-classic/SKILL.md)**: Plain `m.n.p` VERSION with unprefixed Conventional Commit subjects and build trailers.
-- **[`versioning-prefixed`](versioning-prefixed/SKILL.md)**: Plain `m.n.p` VERSION with UTC build-prefixed commit subjects and feature patch bumps.
+- **[`versioning-prefixed`](versioning-prefixed/SKILL.md)**: Plain `m.n.p` VERSION with a version-only subject prefix, build trailer, and feature patch bumps.
 - **[`apple-design`](apple-design/SKILL.md)**: Cross-platform UI/UX design review and audit grounded in Apple Human Interface Guidelines.
 - **[`changelog-curator`](changelog-curator/SKILL.md)**: AI-driven architectural changelog synthesis, milestone chronicle curation, and release notes management.
 - **[`brainstorming`](brainstorming/SKILL.md)**: Explore user intent, requirements, and design before implementation.
